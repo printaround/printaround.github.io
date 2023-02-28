@@ -120,3 +120,21 @@ margin-top: 20px;
 width: 100%;
 }
 }
+
+.download-button {
+  background-color: #000000;
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.download-button:hover {
+  background-color: #333333;
+}
+
+.download-button:focus {
+  outline: none;
+}
