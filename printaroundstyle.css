@@ -138,3 +138,10 @@ width: 100%;
 .download-button:focus {
   outline: none;
 }
+
+.youtube-img {
+width: 10%;
+height: auto;
+margin-bottom: 10px;
+border-top: 10px;
+}
