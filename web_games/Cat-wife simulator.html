@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Няшный Кошко-жена Simulator</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #ffb3d9 0%, #ff99cc 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Comic Sans MS', cursive;
+            position: relative;
+            overflow: hidden;
+            padding-bottom: 50px;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="5" y="20" font-size="20" fill="%23ffffff33">🐾</text></svg>');
+            z-index: 0;
+            opacity: 0.3;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #ff0066;
+            text-shadow: 2px 2px 0px #ffffff;
+            margin: 20px 0;
+            z-index: 1;
+            background: rgba(255,255,255,0.7);
+            padding: 10px 20px;
+            border-radius: 15px;
+            border: 3px solid #ffffff;
+        }
+
+        #cat {
+            width: 280px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 20px 0;
+            filter: drop-shadow(0 10px 15px rgba(255,0,102,0.2));
+            animation: float 3s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        .hearts-container {
+            background: rgba(255,255,255,0.9);
+            padding: 10px 20px;
+            border-radius: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        #hearts {
+            font-size: 40px;
+            color: #ff3366;
+            margin: 10px 0;
+            text-shadow: 1px 1px 0px #ffffff;
+        }
+
+        #wish {
+            font-size: 50px;
+            margin: 10px 0;
+            text-shadow: 2px 2px 0px #ffffff;
+            animation: pulse 1.5s infinite;
+        }
+
+        #food-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 20px 0 40px;
+            z-index: 1;
+        }
+
+        .food-btn {
+            font-size: 45px;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 20px;
+            background: linear-gradient(145deg, #ffffff, #ffe6f2);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .food-btn:hover {
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: 0 8px 20px rgba(255,0,102,0.3);
+            background: linear-gradient(145deg, #ffe6f2, #ffffff);
+        }
+
+        .food-btn::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border-radius: 30px;
+            border: 2px dashed #ff99cc;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .food-btn:hover::after {
+            opacity: 0.5;
+        }
+
+        #message {
+            font-size: 24px;
+            color: #ff3366;
+            padding: 15px 30px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 15px;
+            margin: 20px 0 60px;
+            transition: all 0.3s;
+            border: 2px solid #ffffff;
+            text-align: center;
+            max-width: 80%;
+        }
+
+        #score {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            color: #ff0066;
+            background: rgba(255,255,255,0.9);
+            padding: 10px 20px;
+            border-radius: 15px;
+            border: 2px solid #ffffff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes sparkle {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        @media (max-width: 600px) {
+            #cat { width: 200px; }
+            .food-btn { font-size: 35px; }
+            h1 { font-size: 2em; }
+            body { padding-bottom: 30px; }
+            #food-buttons { margin-bottom: 30px; gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <h1>🐾 Няшная Кошко-жена Simulator 🌸</h1>
+    <div id="score">Социальные кредиты: 0</div>
+    
+    <div class="hearts-container">
+        <div id="hearts">❤️❤️❤️❤️❤️</div>
+    </div>
+
+    <img id="cat" src="https://cs14.pikabu.ru/post_img/big/2023/01/01/9/1672583613174356185.jpg" 
+         alt="Няшная кошко-жена">
+    
+    <p>Сейчас хочет: <span id="wish"></span></p>
+    
+    <div id="food-buttons">
+        <button class="food-btn">🍚</button>
+        <button class="food-btn">🐟</button>
+        <button class="food-btn">🍤</button>
+        <button class="food-btn">🥩</button>
+    </div>
+
+    <p id="message">Начни игру, погладь кошечку! 🐱💕</p>
+
+    <script>
+        let loyalty = 5;
+        let socialCredits = 0;
+        const foods = ['🍚', '🐟', '🍤', '🥩'];
+        const actions = [...foods, 'pet'];
+        let currentAction = null;
+        let actionTimeout = null;
+        const cat = document.getElementById('cat');
+        const foodButtons = document.querySelectorAll('.food-btn');
+        
+        const correctMessages = [
+            "Мяяяу! Идеальный гражданин! 😻💖",
+            "+10 социальных кредитов! 🏆",
+            "Одобрено Центральным Комитетом! 🌟",
+            "Достойный выбор! 🎖️"
+        ];
+
+        const petMessages = [
+            "Мурррр... 😺💞",
+            "Так приятно! 🐾✨",
+            "Ты заслужил доверие! 🤝",
+            "Продолжай в том же духе! 💪"
+        ];
+
+        const incorrectMessages = [
+            "Фууу! Минус кредиты! 😾",
+            "Нарушение протокола! 💢",
+            "Это антиобщественное поведение! 🚫",
+            "Докладываем в комитет! 📋"
+        ];
+
+        function startActionTimer() {
+            if(actionTimeout) clearTimeout(actionTimeout);
+            actionTimeout = setTimeout(() => {
+                if(currentAction) handleFailure();
+            }, 8000);
+        }
+
+        function setNewAction() {
+            currentAction = actions[Math.floor(Math.random() * actions.length)];
+            const actionElement = document.getElementById('wish');
+            
+            if(currentAction === 'pet') {
+                actionElement.textContent = "🐾 Погладь меня!";
+                document.getElementById('message').textContent = "Кошко-жена хочет внимания!";
+            } else {
+                actionElement.textContent = currentAction;
+                document.getElementById('message').textContent = "Нужно покормить!";
+            }
+            
+            startActionTimer();
+            setTimeout(setNewAction, Math.floor(Math.random() * (20000 - 10000) + 10000));
+        }
+
+        function handleSuccess() {
+            socialCredits += 10;
+            if(socialCredits >= 150) {
+                document.getElementById('message').innerHTML = 
+                    "🎉 Игра пройдена! Вы получаете: 🍚🍚<br>Ваша кошко-жена счастлива!";
+                clearTimeout(actionTimeout);
+                return;
+            }
+            
+            document.getElementById('score').textContent = `Социальные кредиты: ${socialCredits}`;
+            createSparkles(cat.offsetLeft, cat.offsetTop);
+            
+            if(loyalty < 5) {
+                loyalty++;
+                updateHearts();
+            }
+        }
+
+        function handleFailure() {
+            loyalty = Math.max(loyalty - 2, 0);
+            document.getElementById('message').innerHTML = 
+                incorrectMessages[Math.floor(Math.random()*incorrectMessages.length)];
+            updateHearts();
+            currentAction = null;
+            document.getElementById('wish').textContent = "";
+        }
+
+        function createSparkles(x, y) {
+            for(let i = 0; i < 5; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.style.cssText = `
+                    position: absolute;
+                    left: ${x}px;
+                    top: ${y}px;
+                    font-size: 20px;
+                    opacity: 0;
+                    pointer-events: none;
+                    animation: sparkle 0.8s ease-out;
+                `;
+                sparkle.textContent = ['✨', '🌟', '💫', '🌸', '🎀'][Math.floor(Math.random()*5)];
+                document.body.appendChild(sparkle);
+                setTimeout(() => sparkle.remove(), 800);
+            }
+        }
+
+        cat.addEventListener('click', () => {
+            if(currentAction === 'pet') {
+                document.getElementById('message').innerHTML = 
+                    petMessages[Math.floor(Math.random()*petMessages.length)];
+                handleSuccess();
+                currentAction = null;
+                document.getElementById('wish').textContent = "";
+                clearTimeout(actionTimeout);
+            }
+        });
+
+        foodButtons.forEach((btn, index) => {
+            btn.addEventListener('click', () => {
+                if(currentAction === foods[index]) {
+                    document.getElementById('message').innerHTML = 
+                        correctMessages[Math.floor(Math.random()*correctMessages.length)];
+                    handleSuccess();
+                } else {
+                    handleFailure();
+                }
+                currentAction = null;
+                document.getElementById('wish').textContent = "";
+                clearTimeout(actionTimeout);
+            });
+        });
+
+        function updateHearts() {
+            const hearts = '❤️'.repeat(loyalty) + '🖤'.repeat(5 - loyalty);
+            document.getElementById('hearts').textContent = hearts;
+            
+            if(loyalty <= 0) {
+                document.getElementById('message').innerHTML = 
+                    "Кошко-жена доложила в комитет! 😭<br>Обнови страницу!";
+                cat.style.filter = "grayscale(100%) brightness(0.8)";
+                clearTimeout(actionTimeout);
+            }
+        }
+
+        setTimeout(setNewAction, 3000);
+        updateHearts();
+    </script>
+</body>
+</html>
